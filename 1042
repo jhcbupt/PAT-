@@ -1,0 +1,97 @@
+#include<bits/stdc++.h>
+using namespace std;
+//根本没有必要在数组中实际存这些字符串，就用数字代表牌，最后输出的时候输出字符串就行了
+int main(){
+    int times;
+    cin>>times;
+    vector<int> init;
+    for(int i = 1; i <= 54; i++){
+        init.push_back(i);
+    }
+    vector<int> operate;
+    int a;
+    for(int i = 1; i <= 54; i++){
+        cin>>a;
+        operate.push_back(a);
+    }
+    vector<int> temp(54);
+    int t = 1;
+    while(t <= times){
+        if(t&1){//奇数次是从init到temp操作
+            for(int i = 0; i < 54; i++){
+                temp.at(operate.at(i) - 1) = init.at(i);
+            }
+        }
+        else{//偶数次相反
+            for(int i = 0; i < 54; i++){
+                init.at(operate.at(i) - 1) = temp.at(i);
+            }
+        }
+        t++;
+    }
+    if(times & 1){//如果操作了奇数次，最终结果在temp中
+        for(int i = 0; i < 54; i++){
+            int x = temp.at(i) % 13;
+            switch(temp.at(i) / 13){
+                    case 0: cout<< "S" << (x == 0 ? 13 : x);
+                             break;
+                    case 1: if(x==0){
+                        cout<<"S13";
+                    }
+                    else{cout<< "H" << (x == 0 ? 13 : x);}
+                             break;
+                    case 2: if(x==0){
+                        cout<<"H13";
+                    }
+                    else{cout<< "C" << (x == 0 ? 13 : x);}
+                             break;
+                    case 3: if(x==0){
+                        cout<<"C13";
+                    }
+                    else{cout<< "D" << (x == 0 ? 13 : x);}
+                             break;
+                    default: if(x==0){
+                        cout<<"D13";
+                    }
+                             else{cout<< "J" << x;}
+                             break;
+            }
+            if(i != 53){
+                cout<<" ";
+            }
+        }
+    }
+    else{
+        for(int i = 0; i < 54; i++){
+            int x = init.at(i) % 13;
+            switch(init.at(i) / 13){
+                    case 0: cout<< "S" << (x == 0 ? 13 : x);
+                             break;
+                    case 1: if(x==0){
+                        cout<<"S13";
+                    }
+                    else{cout<< "H" << (x == 0 ? 13 : x);}
+                             break;
+                    case 2: if(x==0){
+                        cout<<"H13";
+                    }
+                    else{cout<< "C" << (x == 0 ? 13 : x);}
+                             break;
+                    case 3: if(x==0){
+                        cout<<"C13";
+                    }
+                    else{cout<< "D" << (x == 0 ? 13 : x);}
+                             break;
+                    default: if(x==0){
+                        cout<<"D13";
+                    }
+                             else{cout<< "J" << x;}
+                             break;
+            }
+            if(i != 53){
+                cout<<" ";
+            }
+        }
+    }
+    return 0;
+}

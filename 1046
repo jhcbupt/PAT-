@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+//最朴素的思路，会超时，只是遍历数组做最简单的累加也会超时，必须对数组再优化
+int main(){
+    int M, a, N, b, ans = 0, sum = 0;
+    cin>>M;
+    vector<int> cycle;
+    for(int i = 0; i < M; i++){
+        cin>>a;
+        cycle.push_back(a);
+        sum += a;
+    }
+    cin>>N;
+    for(int i = 0; i < N; i++){
+        cin>>a>>b;
+        ans = 0;
+        for(int j = min(a, b) - 1; j <= max(a,b) - 2; j++){
+            ans += cycle.at(j);
+        }
+        cout<<(ans < sum - ans ? ans : sum - ans)<<endl;
+    }
+    return 0;
+}
+
+//直接把cycle在输入的时候变成累加的距离，输出的时候就不用再遍历算了，保证不会超时
+int main(){
+    int M, a, N, b, ans = 0, sum = 0;
+    cin>>M;
+    vector<int> cycle;
+    for(int i = 0; i < M; i++){
+        cin>>a;
+        sum += a;
+        cycle.push_back(sum);
+    }
+    cin>>N;
+    for(int i = 0; i < N; i++){
+        cin>>a>>b;
+        int min_ = min(a,b), max_ = max(a,b);
+        if(min_ == 1){
+            if(max_ != 1)
+            ans = cycle.at(max_ - 2);
+            else 
+            ans = 0;
+        }
+        else{
+            ans = cycle.at(max_ - 2) - cycle.at(min_ - 2);
+        }
+        cout<<min(ans , sum - ans)<<endl;
+    }
+    return 0;
+}
